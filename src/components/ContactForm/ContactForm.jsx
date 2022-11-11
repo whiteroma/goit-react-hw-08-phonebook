@@ -13,6 +13,7 @@ import {
 import { Oval } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { Outlet } from 'react-router-dom';
 
 const initialValues = {
   name: '',
@@ -51,7 +52,7 @@ const ContactForm = () => {
   }, [isSuccess, isError]);
 
   return (
-    <Formik
+    <><Formik
       initialValues={initialValues}
       onSubmit={handleSubmit}
       validationSchema={validationSchema}
@@ -64,8 +65,7 @@ const ContactForm = () => {
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
+            required />
           <ErrorMessage name="name" />
         </label>
         <label>
@@ -75,8 +75,7 @@ const ContactForm = () => {
             name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and should start with +"
-            required
-          />
+            required />
           <ErrorMessage name="phone" />
         </label>
         {isLoading ? (
@@ -90,13 +89,12 @@ const ContactForm = () => {
             ariaLabel="oval-loading"
             secondaryColor="blue"
             strokeWidth={2}
-            strokeWidthSecondary={2}
-          />
+            strokeWidthSecondary={2} />
         ) : (
           <button type="submit">Add contact</button>
         )}
       </FormContainer>
-    </Formik>
+    </Formik><Outlet /></>
   );
 };
 
