@@ -1,8 +1,9 @@
-import { Outlet} from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useSignUpUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Register.styled';
+import React from 'react';
 
 const initialValues = {
   name: '',
@@ -23,10 +24,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  const [signUpUser] =
-    useSignUpUserMutation();
-  console.log('loginUser', signUpUser);
-//   const { data } = useGetUserQuery();
+  const [signUpUser] = useSignUpUserMutation();
+  console.log("signUpUser", signUpUser);
+  //   const { data } = useGetUserQuery();
   const handleSubmit = (values, { resetForm }) => {
     console.log(values);
     resetForm();

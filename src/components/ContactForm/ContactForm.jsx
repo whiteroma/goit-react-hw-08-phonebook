@@ -1,10 +1,6 @@
 import { React } from 'react';
 import { FormContainer } from './ContactForm.styled';
-import {
-  Formik,
-  Field,
-  ErrorMessage
-} from 'formik';
+import { Formik, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import {
   useAddContactMutation,
@@ -27,6 +23,7 @@ const validationSchema = Yup.object().shape({
 const ContactForm = () => {
   const [addContact, { isLoading, isError, isSuccess }] =
     useAddContactMutation();
+  console.log('addContact', addContact);
   const { data } = useFetchContactsQuery();
 
   const handleSubmit = async (values, { resetForm }) => {
@@ -52,49 +49,55 @@ const ContactForm = () => {
   }, [isSuccess, isError]);
 
   return (
-    <><Formik
-      initialValues={initialValues}
-      onSubmit={handleSubmit}
-      validationSchema={validationSchema}
-    >
-      <FormContainer>
-        <label>
-          Name
-          <Field
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required />
-          <ErrorMessage name="name" />
-        </label>
-        <label>
-          Number
-          <Field
-            type="tel"
-            name="phone"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and should start with +"
-            required />
-          <ErrorMessage name="phone" />
-        </label>
-        {isLoading ? (
-          <Oval
-            height={40}
-            width={40}
-            color="blue"
-            wrapperStyle={{}}
-            wrapperClass=""
-            visible={true}
-            ariaLabel="oval-loading"
-            secondaryColor="blue"
-            strokeWidth={2}
-            strokeWidthSecondary={2} />
-        ) : (
-          <button type="submit">Add contact</button>
-        )}
-      </FormContainer>
-    </Formik><Outlet /></>
+    <>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+        validationSchema={validationSchema}
+      >
+        <FormContainer>
+          <label>
+            Name
+            <Field
+              type="text"
+              name="name"
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              required
+            />
+            <ErrorMessage name="name" />
+          </label>
+          <label>
+            Number
+            <Field
+              type="tel"
+              name="phone"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and should start with +"
+              required
+            />
+            <ErrorMessage name="phone" />
+          </label>
+          {isLoading ? (
+            <Oval
+              height={40}
+              width={40}
+              color="blue"
+              wrapperStyle={{}}
+              wrapperClass=""
+              visible={true}
+              ariaLabel="oval-loading"
+              secondaryColor="blue"
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
+          ) : (
+            <button type="submit">Add contact</button>
+          )}
+        </FormContainer>
+      </Formik>
+      <Outlet />
+    </>
   );
 };
 
