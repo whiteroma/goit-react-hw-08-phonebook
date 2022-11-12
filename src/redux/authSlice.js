@@ -11,44 +11,51 @@ const authSlice = createSlice({
     isLoggedIn: false,
   },
   extraReducers: builder => {
-    builder.addMatcher(
-      userApi.endpoints.logInUser.matchFulfilled,
-      (state, { payload: token, user }) => {
-        state.token = token;
-        state.user = user;
-        state.isLoggedIn = true;
-      }
-    ).addMatcher(
-      userApi.endpoints.signUpUser.matchFulfilled,
-      (state, { payload: token, user }) => {
-        state.token = token;
-        state.user = user;
-        state.isLoggedIn = true;
-      }
-    ).addMatcher(
-      userApi.endpoints.logOutUser.matchFulfilled,
-      (state, { payload: token, user }) => {
-        state.token = token;
-        state.user = user;
-        state.isLoggedIn = false;
-      }
-    ).addMatcher(
-      userApi.endpoints.getUser.matchFulfilled,
-      (state, { payload: token, user }) => {
-        state.token = token;
-        state.user = user;
-        state.isLoggedIn = true;
-      }
-    );
+    builder
+      .addMatcher(
+        userApi.endpoints.logInUser.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.token;
+          state.user = payload.user;
+          state.isLoggedIn = true;
+        }
+      )
+      .addMatcher(
+        userApi.endpoints.signUpUser.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.token;
+          state.user = payload.user;
+          state.isLoggedIn = true;
+        }
+      )
+      .addMatcher(
+        userApi.endpoints.logOutUser.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.token;
+          state.user = payload.user;
+          state.isLoggedIn = false;
+        }
+      )
+      .addMatcher(
+        userApi.endpoints.getUser.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.token;
+          state.user = payload.user;
+          state.isLoggedIn = true;
+        }
+      );
   },
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-}
-export const persistedReducer = persistReducer(persistConfig, authSlice.reducer)
- 
+};
+export const persistedReducer = persistReducer(
+  persistConfig,
+  authSlice.reducer
+);
+
 export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
