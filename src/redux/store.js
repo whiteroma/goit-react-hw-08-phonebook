@@ -21,11 +21,13 @@ export const store = configureStore({
     [contactsApi.reducerPath]: contactsApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(
+    {
     serializableCheck: {
       ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
     },
-  }).concat(contactsApi.middleware).concat(userApi.middleware)
+  }
+  ).concat(contactsApi.middleware).concat(userApi.middleware)
       
     
   },

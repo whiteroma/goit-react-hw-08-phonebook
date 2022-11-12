@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 
 export default function Layout() {
   const logged = useSelector(state => state.auth.isLoggedIn);
-  console.log('logged', logged);
   return (
     <Container>
       <Header>

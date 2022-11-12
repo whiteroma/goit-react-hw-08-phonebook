@@ -1,9 +1,9 @@
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Login.styled';
-import { toast } from 'react-toastify';
+// import { toast } from 'react-toastify';
 // import { useDispatch } from 'react-redux';
 // import { setCredentials } from 'redux/authSlice';
 
@@ -26,11 +26,11 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
     const [logInUser] = useLogInUserMutation();
   const handleSubmit = (values, { resetForm }) => {
     logInUser(values);
-    navigate('/contacts')
+    // navigate('/contacts')
     resetForm();
   };
 

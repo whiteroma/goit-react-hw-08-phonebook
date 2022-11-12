@@ -51,7 +51,9 @@ const authSlice = createSlice({
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['token']
 };
+
 export const persistedReducer = persistReducer(
   persistConfig,
   authSlice.reducer
