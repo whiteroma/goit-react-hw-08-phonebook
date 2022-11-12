@@ -4,8 +4,8 @@ import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Login.styled';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
-import { setCredentials } from 'redux/authSlice';
+// import { useDispatch } from 'react-redux';
+// import { setCredentials } from 'redux/authSlice';
 
 const initialValues = {
   name: '',
@@ -26,14 +26,14 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate()
     const [logInUser] = useLogInUserMutation();
   const handleSubmit = async (values, { resetForm }) => {
       try {
-        const user = await logInUser(values).unwrap()
-        dispatch(setCredentials(user))
-        navigate('/contacts')
+        await logInUser(values).unwrap()
+        // dispatch(setCredentials(user, {isLoggedIn : true}))
+        navigate('/contacts') 
       } catch (err) {
         toast({
           status: 'error',

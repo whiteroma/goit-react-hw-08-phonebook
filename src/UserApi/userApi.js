@@ -19,8 +19,8 @@ export const userApi = createApi({
   endpoints: builder => ({
     getUser: builder.query({
       query: () => 'users/current',
+      invalidatesTags: ['User'],
     }),
-    invalidatesTags: ['User'],
     signUpUser: builder.mutation({
       query: user => ({
         url: `users/signup`,
