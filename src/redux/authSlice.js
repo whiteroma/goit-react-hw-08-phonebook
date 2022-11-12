@@ -15,6 +15,7 @@ const authSlice = createSlice({
       .addMatcher(
         userApi.endpoints.logInUser.matchFulfilled,
         (state, { payload }) => {
+          console.log("payload", payload);
           state.token = payload.token;
           state.user = payload.user;
           state.isLoggedIn = true;

@@ -25,7 +25,7 @@ const validationSchema = Yup.object().shape({
 
 export default function Login() {
   const [signUpUser] = useSignUpUserMutation();
-  console.log("signUpUser", signUpUser);
+  // console.log("signUpUser", signUpUser());
   //   const { data } = useGetUserQuery();
   const handleSubmit = (values, { resetForm }) => {
     signUpUser(values);

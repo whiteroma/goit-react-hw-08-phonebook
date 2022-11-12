@@ -26,24 +26,11 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  // const dispatch = useDispatch();
   const navigate = useNavigate()
     const [logInUser] = useLogInUserMutation();
-  const handleSubmit = async (values, { resetForm }) => {
-      try {
-        await logInUser(values).unwrap()
-        // dispatch(setCredentials(user, {isLoggedIn : true}))
-        navigate('/contacts') 
-      } catch (err) {
-        toast({
-          status: 'error',
-          title: 'Error',
-          description: 'Oh no, there was an error!',
-          isClosable: true,
-        })
-      }
-    
-    // logInUser(values);
+  const handleSubmit = (values, { resetForm }) => {
+    logInUser(values);
+    navigate('/contacts')
     resetForm();
   };
 
