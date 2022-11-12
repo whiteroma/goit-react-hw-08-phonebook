@@ -1,5 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { userApi } from 'UserApi/userApi';
+import { persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const authSlice = createSlice({
   name: 'auth',
@@ -41,6 +43,12 @@ const authSlice = createSlice({
   },
 });
 
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+export const persistedReducer = persistReducer(persistConfig, authSlice.reducer)
+ 
 export const { setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
