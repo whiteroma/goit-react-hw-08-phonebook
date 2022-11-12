@@ -1,8 +1,11 @@
 import { Outlet } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
-// import { useLogInUserMutation } from 'UserApi/userApi';
+import { useLogInUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Login.styled';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from 'redux/authSlice';
 
 const initialValues = {
   name: '',
@@ -16,19 +19,34 @@ const validationSchema = Yup.object().shape({
     .max(50, 'Login length should not be less than 50!')
     .required('Required'),
   password: Yup.string()
-    .min(6, 'Password length should not be less than 6!')
+    .min(5, 'Password length should not be less than 6!')
     .max(50, 'Password length should not be less than 50!')
     .required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
 });
 
 export default function Login() {
-    // const [logInUser, {isLoading, isSuccess, isError}] = useLogInUserMutation();
-    // console.log("loginUser", loginUser);
-  const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
+  const dispatch = useDispatch();
+    const [logInUser] = useLogInUserMutation();
+    console.log("loginUser", logInUser);
+  const handleSubmit = async (values, { resetForm }) => {
+      try {
+        const user = await logInUser(values).unwrap()
+        dispatch(setCredentials(user))
+        // navigate('/')
+      } catch (err) {
+        toast({
+          status: 'error',
+          title: 'Error',
+          description: 'Oh no, there was an error!',
+          isClosable: true,
+        })
+      }
+    
+    // logInUser(values);
     resetForm();
   };
+
   return (
     <>
       <Formik

@@ -17,7 +17,7 @@ const validationSchema = Yup.object().shape({
     .max(50, 'Login length should not be less than 50!')
     .required('Required'),
   password: Yup.string()
-    .min(6, 'Password length should not be less than 6!')
+    .min(5, 'Password length should not be less than 6!')
     .max(50, 'Password length should not be less than 50!')
     .required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
@@ -28,7 +28,7 @@ export default function Login() {
   console.log("signUpUser", signUpUser);
   //   const { data } = useGetUserQuery();
   const handleSubmit = (values, { resetForm }) => {
-    console.log(values);
+    signUpUser(values);
     resetForm();
   };
   return (
@@ -42,7 +42,7 @@ export default function Login() {
           <Field type="text" name="name" required></Field>
           <Field type="text" name="email" required></Field>
           <Field type="text" name="password" required></Field>
-          <button type="submit">Log In</button>
+          <button type="submit">Sign Up</button>
         </FormContainer>
       </Formik>
       <Outlet />
