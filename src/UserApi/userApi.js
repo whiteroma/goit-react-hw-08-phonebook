@@ -5,11 +5,11 @@ export const userApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://connections-api.herokuapp.com/',
     prepareHeaders: (headers, { getState }) => {
-      const token = getState().token;
+      const token = getState().auth.token;
       
   
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set('authorization', `Bearer ${token}`);
       }
       console.log("headers", headers);
       return headers;
@@ -19,15 +19,14 @@ export const userApi = createApi({
   endpoints: builder => ({
     getUser: builder.query({
       query: () => 'users/current',
-      providesTags: ['Contact'],
     }),
+    invalidatesTags: ['User'],
     signUpUser: builder.mutation({
       query: user => ({
         url: `users/signup`,
         method: 'POST',
         body: { name: user.name, email: user.email, password: user.password },
       }),
-      invalidatesTags: ['User'],
     }),
     logInUser: builder.mutation({
       query: user => ({

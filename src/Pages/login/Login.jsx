@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
@@ -27,13 +27,13 @@ const validationSchema = Yup.object().shape({
 
 export default function Login() {
   const dispatch = useDispatch();
+  const navigate = useNavigate()
     const [logInUser] = useLogInUserMutation();
-    console.log("loginUser", logInUser);
   const handleSubmit = async (values, { resetForm }) => {
       try {
         const user = await logInUser(values).unwrap()
         dispatch(setCredentials(user))
-        // navigate('/')
+        navigate('/contacts')
       } catch (err) {
         toast({
           status: 'error',
