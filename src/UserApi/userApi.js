@@ -1,51 +1,69 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
+const BASE_URL = 'https://connections-api.herokuapp.com/users';
+
+const baseQuery = fetchBaseQuery({
+  baseUrl: BASE_URL,
+  prepareHeaders: (headers, { getState }) => {
+    const token = getState().auth.token;
+    // If we have a token set in state, let's assume that we should be passing it.
+    if (token) {
+      headers.set('authorization', `Bearer ${token}`);
+    }
+    return headers;
+  },
+});
+
 export const userApi = createApi({
   reducerPath: 'userApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'https://connections-api.herokuapp.com/',
-    prepareHeaders: (headers, { getState }) => {
-      console.log("getState", getState());
-      const token = getState().auth.token;
-      
-  
-      if (token) {
-        headers.set('authorization', `Bearer ${token}`);
-      }
-      console.log("headers", headers);
-      return headers;
-    },
-  }),
-  tagTypes: ['User'],
+
+  baseQuery,
+  tagTypes: ['Users'],
+
   endpoints: builder => ({
     getUser: builder.query({
-      query: () => 'users/current',
-      invalidatesTags: ['User'],
+      query: () => '/current',
+      invalidatesTags: ['Users'],
     }),
+
     signUpUser: builder.mutation({
-      query: user => ({
-        url: `users/signup`,
+      query: newUser => ({
+        url: '/signup',
         method: 'POST',
-        body: user,
+        body: {
+          name: newUser.name,
+          email: newUser.email,
+          password: newUser.password,
+        },
       }),
+      invalidatesTags: ['Users'],
     }),
     logInUser: builder.mutation({
       query: user => ({
-        url: 'users/login',
+        url: '/login',
         method: 'POST',
-        body: user,
+        body: {
+          name: user.name,
+          email: user.email,
+          password: user.password,
+        },
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['Users'],
     }),
+
     logOutUser: builder.mutation({
       query: () => ({
-        url: 'users/logout',
-        method: 'POST'
+        url: '/logout',
+        method: 'POST',
       }),
-      invalidatesTags: ['User'],
+      invalidatesTags: ['Users'],
     }),
   }),
 });
 
-export const { useSignUpUserMutation, useLogInUserMutation, useGetUserQuery, useLogOutUserMutation } =
-  userApi;
+export const {
+  useGetUserQuery,
+  useSignUpUserMutation,
+  useLogInUserMutation,
+  useLogOutUserMutation,
+} = userApi;

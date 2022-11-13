@@ -18,10 +18,10 @@ export default function ContactList() {
             .filter(
               contact =>
                 contact.name.toLowerCase().includes(filter.toLowerCase()) ||
-                contact.phone.includes(filter)
+                contact.number.includes(filter)
             )
-            .map(({ name, phone, id }) => (
-              <ContactListItem name={name} phone={phone} key={id} id={id} />
+            .map(({ name, number, id }) => (
+              <ContactListItem name={name} number={number} key={id} id={id} />
             ))}
       </List>
       <StyledLink to="/contacts/add">+</StyledLink>

@@ -12,7 +12,7 @@ export default function UserMenu() {
   };
   return (
     <div>
-      <p>Anonymous</p>
+      <p>{data && data.email}</p>
       <button onClick={handleLogOut}>Logout</button>
     </div>
     

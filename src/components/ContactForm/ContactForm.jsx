@@ -13,11 +13,11 @@ import { Outlet } from 'react-router-dom';
 
 const initialValues = {
   name: '',
-  phone: '',
+  number: '',
 };
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
-  phone: Yup.string().required('Please enter a number'),
+  number: Yup.string().required('Please enter a number'),
 });
 
 const ContactForm = () => {
@@ -27,6 +27,7 @@ const ContactForm = () => {
   const { data } = useFetchContactsQuery();
 
   const handleSubmit = async (values, { resetForm }) => {
+    console.log("values", values);
     const addedName = data
       .map(contact => contact.name.toLowerCase())
       .includes(values.name.toLowerCase());
@@ -71,12 +72,12 @@ const ContactForm = () => {
             Number
             <Field
               type="tel"
-              name="phone"
+              name="number"
               pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
               title="Phone number must be digits and can contain spaces, dashes, parentheses and should start with +"
               required
             />
-            <ErrorMessage name="phone" />
+            <ErrorMessage name="number" />
           </label>
           {isLoading ? (
             <Oval
