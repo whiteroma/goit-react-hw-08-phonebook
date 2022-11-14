@@ -33,7 +33,7 @@ export default function UserMenu() {
           <Typography variant="h6" component="nav"  sx={{ flexGrow: 1 }}>
           <StyledLink to="/contacts">Contacts</StyledLink>
           </Typography>
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end"}}>
+          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
             <Typography variant="h6" component="h2">
             {data && data.name}
           </Typography>
