@@ -35,8 +35,8 @@ export default function ContactList() {
 
   return (
     <>
-    <Filter/>
     <Box sx={{ flexGrow: 1 }}>
+    <Filter/>
 <List>
         {data &&
           data
@@ -49,10 +49,10 @@ export default function ContactList() {
               <ContactListItem name={name} number={number} key={id} id={id} />
             ))}
       </List>
-    </Box>
     <IconButton aria-label="delete" onClick={handleClickOpen} sx={{ fontSize: 45, "&:hover": { bacgroundColor: "#1976d2ed" }}} color="primary">
   <PersonAddIcon fontSize="inherit" />
 </IconButton>
+
     <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
@@ -63,6 +63,8 @@ export default function ContactList() {
       <ContactForm handleClose={handleClose}/>
         </DialogContent>
       </Dialog>
+    </Box>
+
       <Outlet/>
     </>
   );

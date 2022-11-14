@@ -1,17 +1,19 @@
 import { Outlet } from 'react-router-dom';
-import { Formik, Field } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Login.styled';
 import { redirect } from 'react-router-dom';
-// import { toast } from 'react-toastify';
-// import { useDispatch } from 'react-redux';
-// import { setCredentials } from 'redux/authSlice';
-
-const initialValues = {
-  email: '',
-  password: '',
-};
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useState } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { CircularProgress } from '@mui/material';
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -22,32 +24,78 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-    const [logInUser] = useLogInUserMutation();
-  const handleSubmit = (values, { resetForm }) => {
-    console.log("values", values);
-    logInUser(values);
+    const [logInUser, {isLoading}] = useLogInUserMutation();
+    const [showPassword, setShowPassword] = useState();
+
+  const formik = useFormik({initialValues: {
+    email: '',
+    password: '',
+  },
+
+  validationSchema: validationSchema,
+  onSubmit: async (values, { resetForm }) => {
+    await logInUser(values);
     redirect('/contacts')
     resetForm();
+  },
+});
+
+  
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword)
+    console.log("showPassword", showPassword);
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
     <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <FormContainer>
-          <label htmlFor="email">
-            Email
-          <Field type="email" name="email" required></Field></label>
-          <label htmlFor="password">
-            Password
-          <Field type="password" name="password" required></Field></label>
-          <button type="submit">Log In</button>
+        <FormContainer onSubmit={formik.handleSubmit}>
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+          <InputLabel htmlFor="email">Email</InputLabel>
+          <Input
+            id="email"
+            type="text"
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            
+          />
+           </FormControl>
+           
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <Input
+          size="large"
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            endAdornment={
+              <InputAdornment 
+               position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+          <LoadingButton
+          size="large"
+          type="submit"
+          loading={isLoading}
+          loadingPosition="center"
+          loadingIndicator={<CircularProgress color="primary" size={24} />}
+        >Log in
+        </LoadingButton> </FormControl>
         </FormContainer>
-      </Formik>
       <Outlet />
     </>
   );
 }
+

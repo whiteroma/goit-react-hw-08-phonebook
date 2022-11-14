@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Header } from './Layout.styled';
 import UserMenu from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
 import AuthNav from 'components/UserMenu/AuthNav';
@@ -14,9 +13,7 @@ export default function Layout() {
   
   return (
     <>
-      <Header>
         {isLoggedIn ? <UserMenu/> : <AuthNav/>}
-      </Header>
       <Suspense>
         <Outlet />
       </Suspense>
