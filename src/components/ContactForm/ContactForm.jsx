@@ -10,6 +10,8 @@ import { Oval } from 'react-loader-spinner';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
 
 const initialValues = {
   name: '',
@@ -20,7 +22,7 @@ const validationSchema = Yup.object().shape({
   number: Yup.string().required('Please enter a number'),
 });
 
-const ContactForm = () => {
+const ContactForm = ({handleClose}) => {
   const [addContact, { isLoading, isError, isSuccess }] =
     useAddContactMutation();
   const { data } = useFetchContactsQuery();
@@ -91,7 +93,10 @@ const ContactForm = () => {
               strokeWidthSecondary={2}
             />
           ) : (
-            <button type="submit">Add contact</button>
+            <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSubmit}>Add</Button>
+        </DialogActions>
           )}
         </FormContainer>
       </Formik>
