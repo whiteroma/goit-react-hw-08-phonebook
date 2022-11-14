@@ -17,6 +17,7 @@ const baseQuery = fetchBaseQuery({
 export const contactsApi = createApi({
   reducerPath: 'contactsApi',
   baseQuery,
+  refetchOnMountOrArgChange: true,
   tagTypes: ['Contact'],
   endpoints: builder => ({
     fetchContacts: builder.query({
@@ -38,6 +39,13 @@ export const contactsApi = createApi({
       }),
       invalidatesTags: ['Contact'],
     }),
+    updateContact: builder.mutation({
+      query: id => ({
+        url: `contacts/${id}`,
+        method: 'PATCH',
+      }),
+      invalidatesTags: ['Contact'],
+    }),
   }),
 });
 
@@ -45,4 +53,5 @@ export const {
   useFetchContactsQuery,
   useAddContactMutation,
   useDeleteContactMutation,
+  useUpdateContactMutation,
 } = contactsApi;

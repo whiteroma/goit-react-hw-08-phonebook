@@ -1,20 +1,18 @@
-// import { useDispatch } from "react-redux";
-import { useLogOutUserMutation, useGetUserQuery } from "UserApi/userApi";
-// import { setCredentials } from 'redux/authSlice';
-
+import { StyledLink } from 'components/Layout/Layout.styled';
+import { useLogOutUserMutation, useGetUserQuery } from 'UserApi/userApi';
 
 export default function UserMenu() {
-    const {data} = useGetUserQuery()
-    console.log("data", data);
-    const [logOutUser] = useLogOutUserMutation();
+  const { data } = useGetUserQuery();
+  console.log('data', data);
+  const [logOutUser] = useLogOutUserMutation();
   const handleLogOut = () => {
     logOutUser();
   };
   return (
-    <div>
-      <p>{data && data.email}</p>
+    <nav>
+      <StyledLink to="/contacts">Contacts</StyledLink>
+      <p>{data && data.name}</p>
       <button onClick={handleLogOut}>Logout</button>
-    </div>
-    
+    </nav>
   );
 }

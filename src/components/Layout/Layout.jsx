@@ -1,30 +1,23 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import { StyledLink, Header } from './Layout.styled';
-import Container from '@mui/material/Container';
+import { Header } from './Layout.styled';
 import UserMenu from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
+import AuthNav from 'components/UserMenu/AuthNav';
+import { useGetUserQuery } from 'UserApi/userApi';
 
 export default function Layout() {
-  const logged = useSelector(state => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+  const token = useSelector(state => state.auth.token);
+  useGetUserQuery({}, {skip: !token})
   return (
-    <Container>
+    <>
       <Header>
-        <nav>
-          <StyledLink to="/contacts">Contacts</StyledLink>
-          {logged ? (
-            <UserMenu />
-          ) : (
-            <>
-              <StyledLink to="/register">Register</StyledLink>
-              <StyledLink to="/login">Log in</StyledLink>
-            </>
-          )}
-        </nav>
+        {isLoggedIn ? <UserMenu/> : <AuthNav/>}
       </Header>
       <Suspense>
         <Outlet />
       </Suspense>
-    </Container>
+    </>
   );
 }

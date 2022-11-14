@@ -3,21 +3,17 @@ import { Formik, Field } from 'formik';
 import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Login.styled';
+import { redirect } from 'react-router-dom';
 // import { toast } from 'react-toastify';
 // import { useDispatch } from 'react-redux';
 // import { setCredentials } from 'redux/authSlice';
 
 const initialValues = {
-  name: '',
   email: '',
   password: '',
 };
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Login length should not be less than 2!')
-    .max(50, 'Login length should not be less than 50!')
-    .required('Required'),
   password: Yup.string()
     .min(5, 'Password length should not be less than 6!')
     .max(50, 'Password length should not be less than 50!')
@@ -26,11 +22,11 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-  // const navigate = useNavigate()
     const [logInUser] = useLogInUserMutation();
   const handleSubmit = (values, { resetForm }) => {
+    console.log("values", values);
     logInUser(values);
-    // navigate('/contacts')
+    redirect('/contacts')
     resetForm();
   };
 
@@ -42,9 +38,12 @@ export default function Login() {
         validationSchema={validationSchema}
       >
         <FormContainer>
-          <Field type="text" name="name" required></Field>
-          <Field type="text" name="email" required></Field>
-          <Field type="text" name="password" required></Field>
+          <label htmlFor="email">
+            Email
+          <Field type="email" name="email" required></Field></label>
+          <label htmlFor="password">
+            Password
+          <Field type="password" name="password" required></Field></label>
           <button type="submit">Log In</button>
         </FormContainer>
       </Formik>

@@ -18,12 +18,13 @@ export const userApi = createApi({
   reducerPath: 'userApi',
 
   baseQuery,
+  // refetchOnMountOrArgChange: true,
   tagTypes: ['Users'],
 
   endpoints: builder => ({
     getUser: builder.query({
       query: () => '/current',
-      invalidatesTags: ['Users'],
+      providesTags: ['Users'],
     }),
 
     signUpUser: builder.mutation({
@@ -43,7 +44,6 @@ export const userApi = createApi({
         url: '/login',
         method: 'POST',
         body: {
-          name: user.name,
           email: user.email,
           password: user.password,
         },

@@ -39,9 +39,15 @@ export default function Login() {
         validationSchema={validationSchema}
       >
         <FormContainer>
-          <Field type="text" name="name" required></Field>
-          <Field type="text" name="email" required></Field>
-          <Field type="text" name="password" required></Field>
+          <label htmlFor="name">
+            Username
+          <Field type="text" name="name" required></Field></label>
+          <label htmlFor="email">
+            Email
+          <Field type="email" name="email" required></Field></label>
+          <label htmlFor="password">
+            Password
+          <Field type="password" name="password" required></Field></label>
           <button type="submit">Sign Up</button>
         </FormContainer>
       </Formik>

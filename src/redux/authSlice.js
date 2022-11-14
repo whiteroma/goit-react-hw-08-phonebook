@@ -10,6 +10,7 @@ const initialState = {
   },
   token: null,
   isLoggedIn: false,
+  isRefreshing: false
 };
 
 export const authSlice = createSlice({
@@ -41,16 +42,26 @@ export const authSlice = createSlice({
       .addMatcher(
         userApi.endpoints.getUser.matchFulfilled,
         (state, { payload }) => {
-          state.user.name = payload.name;
-          state.user.email = payload.email;
+          state.user = payload.user;
           state.isLoggedIn = true;
+          state.isRefreshing = false;
         }
-      );
+      ).addMatcher(
+        userApi.endpoints.getUser.matchPending,
+        (state) => {
+          state.isRefreshing = true;
+        }
+      ).addMatcher(
+        userApi.endpoints.getUser.matchRejected,
+        (state) => {
+          state.isRefreshing = false;
+        }
+      );;
   },
 });
 
 const persistConfig = {
-  key: 'token',
+  key: 'auth',
   storage,
   whitelist: ['token'],
 };
