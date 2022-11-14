@@ -10,6 +10,8 @@ export default function Layout() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
   const token = useSelector(state => state.auth.token);
   useGetUserQuery({}, {skip: !token})
+  
+  
   return (
     <>
       <Header>

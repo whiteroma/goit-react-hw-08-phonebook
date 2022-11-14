@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
   number: Yup.string().required('Please enter a number'),
 });
 
-const ContactForm = ({handleClose}) => {
+const ContactForm = ({ handleClose }) => {
   const [addContact, { isLoading, isError, isSuccess }] =
     useAddContactMutation();
   const { data } = useFetchContactsQuery();
@@ -36,6 +36,7 @@ const ContactForm = ({handleClose}) => {
     } else {
       await addContact({ ...values });
       resetForm();
+      handleClose();
     }
   };
 
@@ -94,9 +95,11 @@ const ContactForm = ({handleClose}) => {
             />
           ) : (
             <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Add</Button>
-        </DialogActions>
+              <Button type="submit" onSubmit={handleSubmit}>
+                Add
+              </Button>
+              <Button onClick={handleClose}>Cancel</Button>
+            </DialogActions>
           )}
         </FormContainer>
       </Formik>

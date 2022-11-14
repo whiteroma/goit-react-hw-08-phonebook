@@ -28,13 +28,12 @@ export const StyledLink = styled(NavLink)`
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
-  color: black;
+  color: white;
   font-weight: 500;
   &.active {
     color: white;
-    background-color: orangered;
   }
   :hover:not(.active) {
-    color: orangered;
+    text-decoration: underline;
   }
 `;

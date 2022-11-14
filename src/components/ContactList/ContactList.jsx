@@ -13,8 +13,10 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 
 export default function ContactList() {
   const filter = useSelector(state => state.contacts.filter);
@@ -48,9 +50,9 @@ export default function ContactList() {
             ))}
       </List>
     </Box>
-    <Button variant="outlined" onClick={handleClickOpen}>
-        Add contact
-      </Button>
+    <IconButton aria-label="delete" onClick={handleClickOpen} sx={{ fontSize: 45, "&:hover": { bacgroundColor: "#1976d2ed" }}} color="primary">
+  <PersonAddIcon fontSize="inherit" />
+</IconButton>
     <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Subscribe</DialogTitle>
         <DialogContent>
