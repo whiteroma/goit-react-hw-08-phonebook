@@ -23,11 +23,9 @@ const validationSchema = Yup.object().shape({
 const ContactForm = () => {
   const [addContact, { isLoading, isError, isSuccess }] =
     useAddContactMutation();
-  console.log('addContact', addContact);
   const { data } = useFetchContactsQuery();
 
   const handleSubmit = async (values, { resetForm }) => {
-    console.log("values", values);
     const addedName = data
       .map(contact => contact.name.toLowerCase())
       .includes(values.name.toLowerCase());

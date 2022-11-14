@@ -1,28 +1,33 @@
-import { Oval } from 'react-loader-spinner';
+// import { Oval } from 'react-loader-spinner';
 // import { ListItem, ListSpan, ListButton } from './ContactListItem.styled';
 import { useDeleteContactMutation } from 'ContactsApi/contactsApi';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Outlet } from 'react-router-dom';
-import { CgProfile } from 'react-icons/cg';
-import ListItemButton from '@mui/material/ListItem';
+import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
-import { useState } from 'react';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import { useToggleModal } from 'hooks/useToggleModal';
+import ModalWindow from 'components/Modal/Modal';
+import UpdateForm from 'components/UpdateForm/UpdateForm';
 
 export default function ContactListItem({ id, name, number }) {
   const [deleteContact, { isLoading, isSuccess, isError }] =
     useDeleteContactMutation();
+  
+    const { open, toggle } = useToggleModal();
+    
+    const handleOpen = () => {
+      toggle();
+    }
 
   useEffect(() => {
     if (isSuccess) {
@@ -34,29 +39,11 @@ export default function ContactListItem({ id, name, number }) {
     }
   }, [isError, isSuccess, name]);
 
-  // <ListItem onClick={() => setSecondary(true)} key={id}
-  //                   secondaryAction={
-  //                     <IconButton edge="end" onClick={() => deleteContact(id)}>
-  //                       <DeleteIcon />
-  //                     </IconButton>
-  //                   }
-  //                 >
-  //                   <ListItemAvatar>
-  //                     <Avatar>
-  //                       <CgProfile />
-  //                     </Avatar>
-  //                   </ListItemAvatar>
-  //                   <ListItemText
-  //                     primary="Single-line item"
-  //                     secondary={secondary ? '{number}' : null}
-  //                   />
-  //                 </ListItem>,
 
-  // onClick={() => setSecondary(true)}
-
+  console.log("showModal", open);
   return (
     <>
-      <ListItemButton key={id}>
+      <ListItem key={id}>
         <ListItemAvatar>
           <Avatar sx={{ bgcolor: 'inherit' }}>
             <ContactPhoneIcon color="primary" />
@@ -68,7 +55,7 @@ export default function ContactListItem({ id, name, number }) {
         />
         <LoadingButton
           size="small"
-          onClick={() => console.log(id)}
+          onClick={handleOpen}
           loading={isLoading}
           loadingPosition="center"
           loadingIndicator={<CircularProgress color="primary" size={16} />}
@@ -82,9 +69,11 @@ export default function ContactListItem({ id, name, number }) {
           loadingIndicator={<CircularProgress color="primary" size={16} />}
         ><DeleteIcon />
         </LoadingButton>
+
+        {open && <ModalWindow><UpdateForm/></ModalWindow>}
         
         <Outlet />
-      </ListItemButton>
+      </ListItem>
     </>
   );
 }

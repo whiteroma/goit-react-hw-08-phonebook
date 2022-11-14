@@ -1,11 +1,10 @@
 import { useSelector } from 'react-redux';
-import { React, useState } from 'react';
+import { React } from 'react';
 // import { List } from './ContactList.styled';
 import { List } from '@mui/material';
 import { useFetchContactsQuery } from 'ContactsApi/contactsApi';
 import ContactListItem from 'components/ContactListItem/ContactListItem';
 import { Outlet } from 'react-router-dom';
-import { StyledLink } from 'components/Layout/Layout.styled';
 import Filter from 'components/Filter/Filter';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Box from '@mui/material/Box';
