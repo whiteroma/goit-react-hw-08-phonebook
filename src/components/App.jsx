@@ -33,7 +33,7 @@ export default function App() {
               <Route path="register" element={<Register />}></Route>
               <Route path="login" element={<Login />}></Route>
             </Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/login" replace />} />
           </Route>
         </Routes>
         {/* <h1>Phonebook</h1>
