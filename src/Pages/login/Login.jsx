@@ -24,35 +24,35 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Login() {
-    const [logInUser, {isLoading}] = useLogInUserMutation();
-    const [showPassword, setShowPassword] = useState();
+  const [logInUser, { isLoading }] = useLogInUserMutation();
+  const [showPassword, setShowPassword] = useState();
 
-  const formik = useFormik({initialValues: {
-    email: '',
-    password: '',
-  },
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+    },
 
-  validationSchema: validationSchema,
-  onSubmit: async (values, { resetForm }) => {
-    await logInUser(values);
-    redirect('/contacts')
-    resetForm();
-  },
-});
+    validationSchema: validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      await logInUser(values);
+      redirect('/contacts');
+      resetForm();
+    },
+  });
 
-  
   const handleClickShowPassword = () => {
-    setShowPassword(!showPassword)
-    console.log("showPassword", showPassword);
+    setShowPassword(!showPassword);
+    console.log('showPassword', showPassword);
   };
 
-  const handleMouseDownPassword = (event) => {
+  const handleMouseDownPassword = event => {
     event.preventDefault();
   };
 
   return (
     <>
-        <FormContainer onSubmit={formik.handleSubmit}>
+      <FormContainer onSubmit={formik.handleSubmit}>
         <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
@@ -60,21 +60,19 @@ export default function Login() {
             type="text"
             value={formik.values.email}
             onChange={formik.handleChange}
-            
           />
-           </FormControl>
-           
+        </FormControl>
+
         <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input
-          size="large"
+            size="large"
             id="password"
             type={showPassword ? 'text' : 'password'}
             value={formik.values.password}
             onChange={formik.handleChange}
             endAdornment={
-              <InputAdornment 
-               position="end">
+              <InputAdornment position="end">
                 <IconButton
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
@@ -86,16 +84,17 @@ export default function Login() {
             }
           />
           <LoadingButton
-          size="large"
-          type="submit"
-          loading={isLoading}
-          loadingPosition="center"
-          loadingIndicator={<CircularProgress color="primary" size={24} />}
-        >Log in
-        </LoadingButton> </FormControl>
-        </FormContainer>
+            size="large"
+            type="submit"
+            loading={isLoading}
+            loadingPosition="center"
+            loadingIndicator={<CircularProgress color="primary" size={24} />}
+          >
+            Log in
+          </LoadingButton>{' '}
+        </FormControl>
+      </FormContainer>
       <Outlet />
     </>
   );
 }
-

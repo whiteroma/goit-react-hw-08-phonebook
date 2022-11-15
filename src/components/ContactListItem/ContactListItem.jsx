@@ -22,12 +22,12 @@ import UpdateForm from 'components/UpdateForm/UpdateForm';
 export default function ContactListItem({ id, name, number }) {
   const [deleteContact, { isLoading, isSuccess, isError }] =
     useDeleteContactMutation();
-  
-    const { open, toggle } = useToggleModal();
-    
-    const handleOpen = () => {
-      toggle();
-    }
+
+  const { open, toggle } = useToggleModal();
+
+  const handleOpen = () => {
+    toggle();
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -39,8 +39,7 @@ export default function ContactListItem({ id, name, number }) {
     }
   }, [isError, isSuccess, name]);
 
-
-  console.log("showModal", open);
+  console.log('showModal', open);
   return (
     <>
       <ListItem key={id}>
@@ -49,29 +48,32 @@ export default function ContactListItem({ id, name, number }) {
             <ContactPhoneIcon color="primary" />
           </Avatar>
         </ListItemAvatar>
-        <ListItemText
-          primary={name}
-          secondary={ number }
-        />
+        <ListItemText primary={name} secondary={number} />
         <LoadingButton
           size="small"
           onClick={handleOpen}
           loading={isLoading}
           loadingPosition="center"
           loadingIndicator={<CircularProgress color="primary" size={16} />}
-        ><EditIcon />
+        >
+          <EditIcon />
         </LoadingButton>
-          <LoadingButton
+        <LoadingButton
           size="small"
           onClick={() => deleteContact(id)}
           loading={isLoading}
           loadingPosition="center"
           loadingIndicator={<CircularProgress color="primary" size={16} />}
-        ><DeleteIcon />
+        >
+          <DeleteIcon />
         </LoadingButton>
 
-        {open && <ModalWindow><UpdateForm/></ModalWindow>}
-        
+        {open && (
+          <ModalWindow>
+            <UpdateForm />
+          </ModalWindow>
+        )}
+
         <Outlet />
       </ListItem>
     </>

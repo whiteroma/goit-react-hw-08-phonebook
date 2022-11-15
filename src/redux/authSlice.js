@@ -10,7 +10,7 @@ const initialState = {
   },
   token: null,
   isLoggedIn: false,
-  isRefreshing: false
+  isRefreshing: false,
 };
 
 export const authSlice = createSlice({
@@ -46,17 +46,13 @@ export const authSlice = createSlice({
           state.isLoggedIn = true;
           state.isRefreshing = false;
         }
-      ).addMatcher(
-        userApi.endpoints.getUser.matchPending,
-        (state) => {
-          state.isRefreshing = true;
-        }
-      ).addMatcher(
-        userApi.endpoints.getUser.matchRejected,
-        (state) => {
-          state.isRefreshing = false;
-        }
-      );;
+      )
+      .addMatcher(userApi.endpoints.getUser.matchPending, state => {
+        state.isRefreshing = true;
+      })
+      .addMatcher(userApi.endpoints.getUser.matchRejected, state => {
+        state.isRefreshing = false;
+      });
   },
 });
 

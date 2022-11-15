@@ -93,7 +93,7 @@ const ContactForm = ({ handleClose }) => {
             />
             <ErrorMessage name="number" />
           </label>
-         
+
           {isLoading ? (
             <Oval
               height={40}
@@ -123,7 +123,6 @@ const ContactForm = ({ handleClose }) => {
 };
 
 export default ContactForm;
-
 
 // <div>
 //         <TextField

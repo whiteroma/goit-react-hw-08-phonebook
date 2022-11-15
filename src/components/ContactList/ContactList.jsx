@@ -17,7 +17,6 @@ import IconButton from '@mui/material/IconButton';
 import { useState } from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
-
 export default function ContactList() {
   const filter = useSelector(state => state.contacts.filter);
   const { data } = useFetchContactsQuery();
@@ -32,40 +31,48 @@ export default function ContactList() {
     setOpen(false);
   };
 
-
   return (
     <>
-    <Box sx={{ flexGrow: 1 }}>
-    <Filter/>
-<List>
-        {data &&
-          data
-            .filter(
-              contact =>
-                contact.name.toLowerCase().includes(filter.toLowerCase()) ||
-                contact.number.includes(filter)
-            )
-            .map(({ name, number, id }) => (
-              <ContactListItem name={name} number={number} key={id} id={id} />
-            ))}
-      </List>
-    <IconButton aria-label="delete" onClick={handleClickOpen} sx={{ fontSize: 45, "&:hover": { bacgroundColor: "#1976d2ed" }}} color="primary">
-  <PersonAddIcon fontSize="inherit" />
-</IconButton>
+      <Box
+        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}
+      >
+        <Filter />
+        <IconButton
+          aria-label="delete"
+          onClick={handleClickOpen}
+          sx={{ fontSize: 45, '&:hover': { bacgroundColor: '#1976d2ed' } }}
+          color="primary"
+        >
+          <PersonAddIcon fontSize="inherit" />
+        </IconButton>
 
-    <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Subscribe</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To subscribe to this website, please enter your email address here. We
-            will send updates occasionally.
-          </DialogContentText>
-      <ContactForm handleClose={handleClose}/>
-        </DialogContent>
-      </Dialog>
-    </Box>
+        <Dialog open={open} onClose={handleClose}>
+          <DialogTitle>Create contact</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              To create new contact please enter the name and the phone number
+              in corresponding field below then click "Add".
+            </DialogContentText>
+            <ContactForm handleClose={handleClose} />
+          </DialogContent>
+        </Dialog>
+      </Box>
+      <Box sx={{ flexGrow: 1 }}>
+        <List>
+          {data &&
+            data
+              .filter(
+                contact =>
+                  contact.name.toLowerCase().includes(filter.toLowerCase()) ||
+                  contact.number.includes(filter)
+              )
+              .map(({ name, number, id }) => (
+                <ContactListItem name={name} number={number} key={id} id={id} />
+              ))}
+        </List>
+      </Box>
 
-      <Outlet/>
+      <Outlet />
     </>
   );
 }

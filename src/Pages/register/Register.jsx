@@ -41,13 +41,16 @@ export default function Login() {
         <FormContainer>
           <label htmlFor="name">
             Username
-          <Field type="text" name="name" required></Field></label>
+            <Field type="text" name="name" required></Field>
+          </label>
           <label htmlFor="email">
             Email
-          <Field type="email" name="email" required></Field></label>
+            <Field type="email" name="email" required></Field>
+          </label>
           <label htmlFor="password">
             Password
-          <Field type="password" name="password" required></Field></label>
+            <Field type="password" name="password" required></Field>
+          </label>
           <button type="submit">Sign Up</button>
         </FormContainer>
       </Formik>

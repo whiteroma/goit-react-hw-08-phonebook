@@ -15,28 +15,36 @@ export default function UserMenu() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [logOutUser] = useLogOutUserMutation();
 
-  const handleMenu = (event) => {
+  const handleMenu = event => {
     setAnchorEl(event.currentTarget);
   };
 
   const handleLogOut = () => {
     logOutUser();
-  }
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
   return (
-      <><Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
-      <AppBar position="static">
-        <Toolbar >
-          <Typography variant="h6" component="nav"  sx={{ flexGrow: 1 }}>
-          <StyledLink to="/contacts">Contacts</StyledLink>
-          </Typography>
-          <Box sx={{ flexGrow: 1, display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
-            <Typography variant="h6" component="h2">
-            {data && data.name}
-          </Typography>
+    <>
+      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6" component="nav" sx={{ flexGrow: 1 }}>
+              <StyledLink to="/contacts">Contacts</StyledLink>
+            </Typography>
+            <Box
+              sx={{
+                flexGrow: 1,
+                display: 'flex',
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}
+            >
+              <Typography variant="h6" component="h2">
+                {data && data.name}
+              </Typography>
               <IconButton
                 size="large"
                 aria-label="account of current user"
@@ -52,21 +60,22 @@ export default function UserMenu() {
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'right'
+                  horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'right'
+                  horizontal: 'right',
                 }}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleLogOut}>Log Out</MenuItem>
               </Menu>
-              </Box>
-        </Toolbar>
-      </AppBar>
-    </Box></>
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Box>
+    </>
   );
 }

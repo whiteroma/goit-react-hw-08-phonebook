@@ -21,18 +21,16 @@ export const store = configureStore({
     [contactsApi.reducerPath]: contactsApi.reducer,
     [userApi.reducerPath]: userApi.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(
-    {
-    serializableCheck: {
-      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-    },
-  }
-  ).concat(contactsApi.middleware).concat(userApi.middleware)
-      
-    
-  },
-);
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    })
+      .concat(contactsApi.middleware)
+      .concat(userApi.middleware),
+});
 
 export const persistor = persistStore(store);
 
-setupListeners(store.dispatch)
+setupListeners(store.dispatch);

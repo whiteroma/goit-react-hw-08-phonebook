@@ -30,6 +30,5 @@ const formSlice = createSlice({
   },
 });
 
-
 export const { addContact, deleteContact, filterContacts } = formSlice.actions;
 export const formReducer = formSlice.reducer;
