@@ -25,9 +25,9 @@ export default function ContactListItem({ id, name, number }) {
 
   const { open, toggle } = useToggleModal();
 
-  const handleOpen = () => {
-    toggle();
-  };
+  // const handleOpen = () => {
+  //   toggle();
+  // };
 
   useEffect(() => {
     if (isSuccess) {
@@ -51,7 +51,7 @@ export default function ContactListItem({ id, name, number }) {
         <ListItemText primary={name} secondary={number} />
         <LoadingButton
           size="small"
-          onClick={handleOpen}
+          onClick={toggle}
           loading={isLoading}
           loadingPosition="center"
           loadingIndicator={<CircularProgress color="primary" size={16} />}
@@ -69,7 +69,7 @@ export default function ContactListItem({ id, name, number }) {
         </LoadingButton>
 
         {open && (
-          <ModalWindow>
+          <ModalWindow onClose={toggle}>
             <UpdateForm />
           </ModalWindow>
         )}

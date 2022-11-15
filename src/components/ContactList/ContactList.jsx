@@ -51,7 +51,7 @@ export default function ContactList() {
           <DialogContent>
             <DialogContentText>
               To create new contact please enter the name and the phone number
-              in corresponding field below then click "Add".
+              in corresponding field below and click "Add".
             </DialogContentText>
             <ContactForm handleClose={handleClose} />
           </DialogContent>
