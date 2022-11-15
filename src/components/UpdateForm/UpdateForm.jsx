@@ -1,46 +1,44 @@
 import { React } from 'react';
 import { FormContainer } from 'components/ContactForm/ContactForm.styled';
-import { Formik, Field, ErrorMessage } from 'formik';
+import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import {
-  useUpdateContactMutation,
-  useFetchContactsQuery,
-} from 'ContactsApi/contactsApi';
-import { Oval } from 'react-loader-spinner';
+import { useUpdateContactMutation } from 'ContactsApi/contactsApi';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { CircularProgress } from '@mui/material';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Typography from '@mui/material/Typography';
 
-const initialValues = {
-  name: '',
-  number: '',
-};
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
   number: Yup.string().required('Please enter a number'),
 });
 
-const UpdateForm = () => {
+const UpdateForm = ({ handleClose, id, name, number }) => {
   const [updateContact, { isLoading, isError, isSuccess }] =
     useUpdateContactMutation();
-  const { data } = useFetchContactsQuery();
 
-  const handleSubmit = async (values, { resetForm }) => {
-    console.log('values', values);
-    const addedName = data
-      .map(contact => contact.name.toLowerCase())
-      .includes(values.name.toLowerCase());
-    if (addedName) {
-      return toast.error(`${values.name} is already in a list`);
-    } else {
-      await updateContact({ ...values });
+  const formik = useFormik({
+    initialValues: {
+      name: name,
+      number: number,
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      await updateContact({ values, id });
       resetForm();
-    }
-  };
+      handleClose();
+    },
+  });
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success('Contact successfully added');
+      toast.success('Contact successfully updated');
     }
 
     if (isError) {
@@ -50,52 +48,57 @@ const UpdateForm = () => {
 
   return (
     <>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={handleSubmit}
-        validationSchema={validationSchema}
-      >
-        <FormContainer>
-          <label>
-            Name
-            <Field
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-            />
-            <ErrorMessage name="name" />
-          </label>
-          <label>
-            Number
-            <Field
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and should start with +"
-              required
-            />
-            <ErrorMessage name="number" />
-          </label>
-          {isLoading ? (
-            <Oval
-              height={40}
-              width={40}
-              color="blue"
-              wrapperStyle={{}}
-              wrapperClass=""
-              visible={true}
-              ariaLabel="oval-loading"
-              secondaryColor="blue"
-              strokeWidth={2}
-              strokeWidthSecondary={2}
-            />
-          ) : (
-            <button type="submit">Add contact</button>
-          )}
-        </FormContainer>
-      </Formik>
+      <Typography variant="h6" component="h2">
+        Update contact
+      </Typography>
+      <Typography sx={{ mt: 2 }}>
+      To update contact please enter new name or phone number below and click "Update contact".
+          </Typography>
+      <FormContainer onSubmit={formik.handleSubmit}>
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+          <InputLabel htmlFor="name">Name</InputLabel>
+          <Input
+            id="name"
+            type="text"
+            value={formik.values.name}
+            onChange={formik.handleChange}
+          />
+        </FormControl>
+
+        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+          <InputLabel htmlFor="number">Number</InputLabel>
+          <Input
+            id="number"
+            type="text"
+            value={formik.values.number}
+            onChange={formik.handleChange}
+          />
+          <ButtonGroup fullWidth sx={{ mt: 3 }}>
+            <LoadingButton
+              sx={{ mr: 0.3 }}
+              variant="contained"
+              size="large"
+              type="submit"
+              loading={isLoading}
+              loadingPosition="center"
+              loadingIndicator={<CircularProgress color="primary" size={24} />}
+            >
+              Update
+            </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              size="large"
+              type="button"
+              onClick={handleClose}
+              loading={isLoading}
+              loadingPosition="center"
+              loadingIndicator={<CircularProgress color="primary" size={24} />}
+            >
+              Cancel
+            </LoadingButton>
+          </ButtonGroup>
+        </FormControl>
+      </FormContainer>
       <Outlet />
     </>
   );

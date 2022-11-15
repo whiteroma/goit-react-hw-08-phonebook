@@ -1,8 +1,6 @@
-// import { Oval } from 'react-loader-spinner';
-// import { ListItem, ListSpan, ListButton } from './ContactListItem.styled';
 import { useDeleteContactMutation } from 'ContactsApi/contactsApi';
 import { toast } from 'react-toastify';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Outlet } from 'react-router-dom';
 import ListItem from '@mui/material/ListItem';
@@ -15,19 +13,15 @@ import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
-import { useToggleModal } from 'hooks/useToggleModal';
-import ModalWindow from 'components/Modal/Modal';
 import UpdateForm from 'components/UpdateForm/UpdateForm';
+import { Box } from '@mui/material';
+import { Modal } from '@mui/material';
 
 export default function ContactListItem({ id, name, number }) {
   const [deleteContact, { isLoading, isSuccess, isError }] =
     useDeleteContactMutation();
-
-  const { open, toggle } = useToggleModal();
-
-  // const handleOpen = () => {
-  //   toggle();
-  // };
+  const [open, setOpen] = useState(false);
+  const toggle = () => setOpen(open => !open);
 
   useEffect(() => {
     if (isSuccess) {
@@ -39,7 +33,6 @@ export default function ContactListItem({ id, name, number }) {
     }
   }, [isError, isSuccess, name]);
 
-  console.log('showModal', open);
   return (
     <>
       <ListItem key={id}>
@@ -69,9 +62,24 @@ export default function ContactListItem({ id, name, number }) {
         </LoadingButton>
 
         {open && (
-          <ModalWindow onClose={toggle}>
-            <UpdateForm />
-          </ModalWindow>
+          <Modal open={open} onClose={toggle}>
+            <Box
+              sx={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                width: 400,
+                bgcolor: 'background.paper',
+                border: '2px solid #000',
+                boxShadow: 24,
+                p: 4,
+              }}
+            >
+              <UpdateForm handleClose={toggle} id={id} name={name} number={number} />
+              <Outlet />
+            </Box>
+          </Modal>
         )}
 
         <Outlet />

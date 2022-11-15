@@ -52,7 +52,15 @@ export const authSlice = createSlice({
       })
       .addMatcher(userApi.endpoints.getUser.matchRejected, state => {
         state.isRefreshing = false;
-      });
+      })
+      // .addMatcher(
+      //   userApi.endpoints.updateContact.matchFulfilled,
+      //   (state, { payload }) => {
+      //     state.token = payload.token;
+      //     state.isLoggedIn = true;
+      //     state.user = payload.user;
+      //   }
+      // );
   },
 });
 
