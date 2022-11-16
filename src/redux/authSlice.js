@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { userApi } from 'UserApi/userApi';
+import { toast } from 'react-toastify';
 
 const initialState = {
   user: {
@@ -11,6 +12,7 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
+  error: null,
 };
 
 export const authSlice = createSlice({
@@ -32,6 +34,12 @@ export const authSlice = createSlice({
           state.token = payload.token;
           state.user = payload.user;
           state.isLoggedIn = true;
+          state.error = null;
+        }
+      ).addMatcher(
+        userApi.endpoints.signUpUser.matchRejected,
+        () => {
+          toast.error("Something went wrong. Maybe this user or email is already registered.")
         }
       )
       .addMatcher(userApi.endpoints.logOutUser.matchFulfilled, (state, _) => {

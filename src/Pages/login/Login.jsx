@@ -97,9 +97,13 @@ export default function Login() {
             }
           />
           {formik.values.password === '' && (
-            <FormHelperText color="red">{formik.errors.password}</FormHelperText>
+            <FormHelperText color="red">
+              {formik.errors.password}
+            </FormHelperText>
           )}
           <LoadingButton
+            variant="contained"
+            sx={{ mt: 2 }}
             size="large"
             type="submit"
             loading={isLoading}
@@ -107,7 +111,7 @@ export default function Login() {
             loadingIndicator={<CircularProgress color="primary" size={24} />}
           >
             Log in
-          </LoadingButton>{' '}
+          </LoadingButton>
         </FormControl>
       </FormContainer>
       <Outlet />

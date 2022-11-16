@@ -31,7 +31,6 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
     },
     validate: values => {
       const errors = {};
-      console.log('errors', errors);
       const numberPattern = /^[0-9\b\s+\(\).*-\s+\+]+$/;
       const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
       if (!values.number) {

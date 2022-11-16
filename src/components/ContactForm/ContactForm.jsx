@@ -34,14 +34,18 @@ const ContactForm = ({ handleClose }) => {
     },
     validate: (values) => {
         const errors = {};
-        const regex = /^[0-9\b\s+\(\).*-\s+\+]+$/
+        const numberPattern = /^[0-9\b\s+\(\).*-\s+\+]+$/;
+      const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
         if (!values.number) {
           errors.number = 'Required';
         } else if (
-          !regex.test(values.number)
+          !numberPattern.test(values.number)
         ) {
           errors.number = 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
-
+        } else if (!values.name) {
+          errors.name = 'Required';
+        } else if (!namePattern.test(values.name)) {
+          errors.name = "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         }
         return errors;
       },
@@ -76,7 +80,7 @@ const ContactForm = ({ handleClose }) => {
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
         <FormControl
-          error={formik.values.name === ''}
+          error={formik.errors.name}
           sx={{ m: 1, width: '30ch' }}
           variant="standard"
         >
@@ -88,7 +92,7 @@ const ContactForm = ({ handleClose }) => {
             onChange={formik.handleChange}
             required
           />
-          {formik.values.name === '' && (
+          {formik.errors.name && (
             <FormHelperText color="red">{formik.errors.name}</FormHelperText>
           )}
         </FormControl>

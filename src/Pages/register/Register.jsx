@@ -15,6 +15,7 @@ import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useSelector } from 'react-redux';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -31,6 +32,7 @@ const validationSchema = Yup.object().shape({
 export default function Register() {
   const [signUpUser, { isLoading }] = useSignUpUserMutation();
   const [showPassword, setShowPassword] = useState();
+  const errorMessage = useSelector(state => state.auth.error);
 
   const formik = useFormik({
     initialValues: {
@@ -39,8 +41,23 @@ export default function Register() {
       password: '',
     },
 
+    validate: values => {
+      const errors = {};
+      if (!values.name) {
+        errors.name = 'Field is required';
+      } else if (!values.email) {
+        errors.email = 'Field is required';
+      } else if (!values.password) {
+        errors.password = 'Field is required';
+      }
+      return errors;
+    },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
+      console.log('errorMessage', errorMessage);
+      // if (errorMessage) {
+      //   toast.error(errorMessage);
+      // } else {
       await signUpUser(values);
       resetForm();
     },
@@ -58,7 +75,7 @@ export default function Register() {
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
         <FormControl
-          error={formik.values.name === ''}
+          error={formik.errors.name}
           sx={{ m: 1, width: '30ch' }}
           variant="standard"
         >
@@ -70,13 +87,13 @@ export default function Register() {
             value={formik.values.name}
             onChange={formik.handleChange}
           />
-          {formik.values.name === '' && (
+          {formik.errors.name && (
             <FormHelperText color="red">{formik.errors.name}</FormHelperText>
           )}
         </FormControl>
 
         <FormControl
-          error={formik.values.email === ''}
+          error={formik.errors.email}
           sx={{ m: 1, width: '30ch' }}
           variant="standard"
         >
@@ -88,13 +105,13 @@ export default function Register() {
             value={formik.values.email}
             onChange={formik.handleChange}
           />
-          {formik.values.email === '' && (
+          {formik.errors.email && (
             <FormHelperText color="red">{formik.errors.email}</FormHelperText>
           )}
         </FormControl>
 
         <FormControl
-          error={formik.values.password === ''}
+          error={formik.errors.password}
           sx={{ m: 1, width: '30ch' }}
           variant="standard"
         >
@@ -118,10 +135,14 @@ export default function Register() {
               </InputAdornment>
             }
           />
-          {formik.values.password === '' && (
-            <FormHelperText color="red">{formik.errors.password}</FormHelperText>
+          {formik.errors.password && (
+            <FormHelperText color="red">
+              {formik.errors.password}
+            </FormHelperText>
           )}
           <LoadingButton
+            variant="contained"
+            sx={{ mt: 2 }}
             size="large"
             type="submit"
             loading={isLoading}
