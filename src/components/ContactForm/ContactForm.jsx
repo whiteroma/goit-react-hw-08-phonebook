@@ -15,6 +15,7 @@ import FormControl from '@mui/material/FormControl';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
@@ -31,7 +32,19 @@ const ContactForm = ({ handleClose }) => {
       name: '',
       number: '',
     },
+    validate: (values) => {
+        const errors = {};
+        const regex = /^[0-9\b\s+\(\).*-\s+\+]+$/
+        if (!values.number) {
+          errors.number = 'Required';
+        } else if (
+          !regex.test(values.number)
+        ) {
+          errors.number = 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
 
+        }
+        return errors;
+      },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       const addedName = data
@@ -47,6 +60,8 @@ const ContactForm = ({ handleClose }) => {
     },
   });
 
+  console.log(formik.errors)
+
   useEffect(() => {
     if (isSuccess) {
       toast.success('Contact successfully added');
@@ -60,47 +75,65 @@ const ContactForm = ({ handleClose }) => {
   return (
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.name === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="name">Name</InputLabel>
           <Input
             id="name"
             type="text"
             value={formik.values.name}
             onChange={formik.handleChange}
+            required
           />
+          {formik.values.name === '' && (
+            <FormHelperText color="red">{formik.errors.name}</FormHelperText>
+          )}
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.errors.number}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="number">Number</InputLabel>
           <Input
+            // inputProps={{ inputMode: "numeric", pattern: "[0-9]*"}}
             id="number"
             type="text"
             value={formik.values.number}
             onChange={formik.handleChange}
+            required
           />
-          <ButtonGroup fullWidth sx={{mt:3}}>
-          <LoadingButton
-          sx={{mr:0.3}}
-          variant='contained'
-            size="large"
-            type="submit"
-            loading={isLoading}
-            loadingPosition="center"
-            loadingIndicator={<CircularProgress color="primary" size={24} />}
-          >
-            Add
-          </LoadingButton>
-          <LoadingButton
-          variant='contained'
-            size="large"
-            type="button"
-            onClick={handleClose}
-            loading={isLoading}
-            loadingPosition="center"
-            loadingIndicator={<CircularProgress color="primary" size={24} />}
-          >
-            Cancel
-          </LoadingButton></ButtonGroup>
+          {formik.errors.number && (
+            <FormHelperText color="red">{formik.errors.number}</FormHelperText>
+          )}
+          <ButtonGroup fullWidth sx={{ mt: 3 }}>
+            <LoadingButton
+              sx={{ mr: 0.3 }}
+              variant="contained"
+              size="large"
+              type="submit"
+              loading={isLoading}
+              loadingPosition="center"
+              loadingIndicator={<CircularProgress color="primary" size={24} />}
+            >
+              Add
+            </LoadingButton>
+            <LoadingButton
+              variant="contained"
+              size="large"
+              type="button"
+              onClick={handleClose}
+              loading={isLoading}
+              loadingPosition="center"
+              loadingIndicator={<CircularProgress color="primary" size={24} />}
+            >
+              Cancel
+            </LoadingButton>
+          </ButtonGroup>
         </FormControl>
       </FormContainer>
       <Outlet />

@@ -3,7 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSignUpUserMutation } from 'UserApi/userApi';
 import { FormContainer } from './Register.styled';
-import React from 'react';import IconButton from '@mui/material/IconButton';
+import React from 'react';
+import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
 import InputLabel from '@mui/material/InputLabel';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -13,12 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
-
-// const initialValues = {
-//   name: '',
-//   email: '',
-//   password: '',
-// };
+import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -33,14 +29,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function Register() {
-  const [signUpUser, {isLoading}] = useSignUpUserMutation();
+  const [signUpUser, { isLoading }] = useSignUpUserMutation();
   const [showPassword, setShowPassword] = useState();
-  // console.log("signUpUser", signUpUser());
-    // const { data } = useGetUserQuery();
-  // const handleSubmit = (values, { resetForm }) => {
-  //   signUpUser(values);
-  //   resetForm();
-  // };
 
   const formik = useFormik({
     initialValues: {
@@ -53,7 +43,7 @@ export default function Register() {
     onSubmit: async (values, { resetForm }) => {
       await signUpUser(values);
       resetForm();
-    }
+    },
   });
 
   const handleClickShowPassword = () => {
@@ -65,57 +55,52 @@ export default function Register() {
   };
 
   return (
-    // <>
-    //   <Formik
-    //     initialValues={initialValues}
-    //     onSubmit={handleSubmit}
-    //     validationSchema={validationSchema}
-    //   >
-    //     <FormContainer>
-    //       <label htmlFor="name">
-    //         Username
-    //         <Field type="text" name="name" required></Field>
-    //       </label>
-    //       <label htmlFor="email">
-    //         Email
-    //         <Field type="email" name="email" required></Field>
-    //       </label>
-    //       <label htmlFor="password">
-    //         Password
-    //         <Field type="password" name="password" required></Field>
-    //       </label>
-    //       <button type="submit">Sign Up</button>
-    //     </FormContainer>
-    //   </Formik>
-    //   <Outlet />
-
-      
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
-        
-      <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.name === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="name">Username</InputLabel>
           <Input
+            required
             id="name"
             type="text"
             value={formik.values.name}
             onChange={formik.handleChange}
           />
+          {formik.values.name === '' && (
+            <FormHelperText color="red">{formik.errors.name}</FormHelperText>
+          )}
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.email === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
+            required
             id="email"
             type="text"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
+          {formik.values.email === '' && (
+            <FormHelperText color="red">{formik.errors.email}</FormHelperText>
+          )}
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.password === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input
+            required
             size="large"
             id="password"
             type={showPassword ? 'text' : 'password'}
@@ -133,6 +118,9 @@ export default function Register() {
               </InputAdornment>
             }
           />
+          {formik.values.password === '' && (
+            <FormHelperText color="red">{formik.errors.password}</FormHelperText>
+          )}
           <LoadingButton
             size="large"
             type="submit"

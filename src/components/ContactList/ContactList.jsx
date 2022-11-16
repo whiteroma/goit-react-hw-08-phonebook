@@ -13,7 +13,7 @@ import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from '@mui/material/IconButton';
+import Button from '@mui/material/Button';
 import { useState } from 'react';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
@@ -34,17 +34,16 @@ export default function ContactList() {
   return (
     <>
       <Box
-        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}
+        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
       >
         <Filter />
-        <IconButton
-          aria-label="delete"
+        <Button variant="contained" endIcon={<PersonAddIcon fontSize="inherit" />}
           onClick={handleClickOpen}
-          sx={{ fontSize: 45, '&:hover': { bacgroundColor: '#1976d2ed' } }}
+          sx={{ width: "200px", height: "42px", '&:hover': { backgroundColor: '#1976d2ed' } }}
           color="primary"
-        >
-          <PersonAddIcon fontSize="inherit" />
-        </IconButton>
+        > Add contact
+
+        </Button>
 
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Create contact</DialogTitle>

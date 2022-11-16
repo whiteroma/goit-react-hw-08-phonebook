@@ -14,6 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -49,23 +50,35 @@ export default function Login() {
   const handleMouseDownPassword = event => {
     event.preventDefault();
   };
-
   return (
     <>
       <FormContainer onSubmit={formik.handleSubmit}>
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.email === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="email">Email</InputLabel>
           <Input
+            required
             id="email"
             type="text"
             value={formik.values.email}
             onChange={formik.handleChange}
           />
+          {formik.values.email === '' && (
+            <FormHelperText color="red">{formik.errors.email}</FormHelperText>
+          )}
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.values.password === ''}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="password">Password</InputLabel>
           <Input
+            required
             size="large"
             id="password"
             type={showPassword ? 'text' : 'password'}
@@ -83,6 +96,9 @@ export default function Login() {
               </InputAdornment>
             }
           />
+          {formik.values.password === '' && (
+            <FormHelperText color="red">{formik.errors.password}</FormHelperText>
+          )}
           <LoadingButton
             size="large"
             type="submit"

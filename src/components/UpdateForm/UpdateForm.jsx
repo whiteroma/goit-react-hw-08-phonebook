@@ -13,6 +13,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
+import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
@@ -27,6 +28,24 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
     initialValues: {
       name: name,
       number: number,
+    },
+    validate: values => {
+      const errors = {};
+      console.log('errors', errors);
+      const numberPattern = /^[0-9\b\s+\(\).*-\s+\+]+$/;
+      const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
+      if (!values.number) {
+        errors.number = 'Required';
+      } else if (!numberPattern.test(values.number)) {
+        errors.number =
+          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
+      } else if (!values.name) {
+        errors.name = 'Required';
+      } else if (!namePattern.test(values.name)) {
+        errors.name = "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+      }
+
+      return errors;
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
@@ -51,28 +70,47 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
       <Typography variant="h6" component="h2">
         Update contact
       </Typography>
-      <Typography sx={{ mt: 2 }}>
-      To update contact please enter new name or phone number below and click "Update contact".
-          </Typography>
+      <Typography sx={{ mt: 2, color: 'rgba(0, 0, 0, 0.6)' }}>
+        To update contact please enter new name or phone number below and click
+        "Update contact".
+      </Typography>
       <FormContainer onSubmit={formik.handleSubmit}>
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.errors.name}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="name">Name</InputLabel>
           <Input
+            required
             id="name"
             type="text"
             value={formik.values.name}
             onChange={formik.handleChange}
           />
+          {formik.errors.name && (
+            <FormHelperText color="red">{formik.errors.name}</FormHelperText>
+          )}
         </FormControl>
 
-        <FormControl sx={{ m: 1, width: '30ch' }} variant="standard">
+        <FormControl
+          error={formik.errors.number}
+          sx={{ m: 1, width: '30ch' }}
+          variant="standard"
+        >
           <InputLabel htmlFor="number">Number</InputLabel>
           <Input
+            // inputProps={{ inputMode: "numeric", pattern: "[0-9]*"}}
             id="number"
             type="text"
             value={formik.values.number}
             onChange={formik.handleChange}
+            required
           />
+          {formik.errors.number && (
+            <FormHelperText color="red">{formik.errors.number}</FormHelperText>
+          )}
+
           <ButtonGroup fullWidth sx={{ mt: 3 }}>
             <LoadingButton
               sx={{ mr: 0.3 }}
