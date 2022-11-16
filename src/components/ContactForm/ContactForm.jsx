@@ -34,7 +34,7 @@ const ContactForm = ({ handleClose }) => {
     },
     validate: (values) => {
         const errors = {};
-        const numberPattern = /^[0-9\b\s+\(\).*-\s+\+]+$/;
+        const numberPattern = /^[0-9\b\s+().*-\s++]+$/;
       const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
         if (!values.number) {
           errors.number = 'Required';
