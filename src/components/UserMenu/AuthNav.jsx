@@ -8,7 +8,14 @@ export default function AuthNav() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar x={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between' }}>
+        <Typography
+            variant="h6"
+            component="nav"
+            sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-start' }}
+          >
+            <StyledLink to="/">Home</StyledLink>
+            </Typography>
           <Typography
             variant="h6"
             component="nav"
@@ -17,6 +24,7 @@ export default function AuthNav() {
             <StyledLink to="/register">Register</StyledLink>
             <StyledLink to="/login">Log in</StyledLink>
           </Typography>
+         
         </Toolbar>
       </AppBar>
     </Box>

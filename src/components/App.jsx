@@ -10,6 +10,7 @@ import Login from 'Pages/login/Login';
 import PrivateRoute from './UserMenu/PrivateRoute';
 import PublicRoute from './UserMenu/PublicRoute';
 import { useSelector } from 'react-redux';
+import Home from 'Pages/home/Home';
 
 export default function App() {
   const isRefreshing = useSelector(state => state.auth.isRefreshing);
@@ -20,6 +21,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Layout />}>
+            <Route index element={<Home/>}/>
             <Route
               path="contacts"
               element={
@@ -27,7 +29,10 @@ export default function App() {
                   <ContactList />
                 </PrivateRoute>
               }
-            ></Route>
+            >
+            </Route>
+
+            
 
             <Route path="/" element={<PublicRoute restricted />}>
               <Route path="register" element={<Register />}></Route>

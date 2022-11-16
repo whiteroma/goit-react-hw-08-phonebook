@@ -32,6 +32,7 @@ export default function UserMenu() {
         <AppBar position="static">
           <Toolbar>
             <Typography variant="h6" component="nav" sx={{ flexGrow: 1 }}>
+              <StyledLink to="/">Home</StyledLink>
               <StyledLink to="/contacts">Contacts</StyledLink>
             </Typography>
             <Box
