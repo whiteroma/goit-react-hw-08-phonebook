@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/goit-react-hw-08-phonebook/static/css/main.49a217e5.css",
-    "main.js": "/goit-react-hw-08-phonebook/static/js/main.50f67677.js",
+    "main.js": "/goit-react-hw-08-phonebook/static/js/main.ce294025.js",
     "static/js/91.068c4507.chunk.js": "/goit-react-hw-08-phonebook/static/js/91.068c4507.chunk.js",
-    "static/js/403.94859da8.chunk.js": "/goit-react-hw-08-phonebook/static/js/403.94859da8.chunk.js",
+    "static/js/403.41bdcc32.chunk.js": "/goit-react-hw-08-phonebook/static/js/403.41bdcc32.chunk.js",
     "static/js/825.7e1cf4b9.chunk.js": "/goit-react-hw-08-phonebook/static/js/825.7e1cf4b9.chunk.js",
     "static/js/676.524ef8b3.chunk.js": "/goit-react-hw-08-phonebook/static/js/676.524ef8b3.chunk.js",
     "static/js/874.7d85cc8d.chunk.js": "/goit-react-hw-08-phonebook/static/js/874.7d85cc8d.chunk.js",
@@ -12,9 +12,9 @@
     "static/js/827.b62fb437.chunk.js": "/goit-react-hw-08-phonebook/static/js/827.b62fb437.chunk.js",
     "index.html": "/goit-react-hw-08-phonebook/index.html",
     "main.49a217e5.css.map": "/goit-react-hw-08-phonebook/static/css/main.49a217e5.css.map",
-    "main.50f67677.js.map": "/goit-react-hw-08-phonebook/static/js/main.50f67677.js.map",
+    "main.ce294025.js.map": "/goit-react-hw-08-phonebook/static/js/main.ce294025.js.map",
     "91.068c4507.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/91.068c4507.chunk.js.map",
-    "403.94859da8.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/403.94859da8.chunk.js.map",
+    "403.41bdcc32.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/403.41bdcc32.chunk.js.map",
     "825.7e1cf4b9.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/825.7e1cf4b9.chunk.js.map",
     "676.524ef8b3.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/676.524ef8b3.chunk.js.map",
     "874.7d85cc8d.chunk.js.map": "/goit-react-hw-08-phonebook/static/js/874.7d85cc8d.chunk.js.map",
@@ -24,6 +24,6 @@
   },
   "entrypoints": [
     "static/css/main.49a217e5.css",
-    "static/js/main.50f67677.js"
+    "static/js/main.ce294025.js"
   ]
 }
