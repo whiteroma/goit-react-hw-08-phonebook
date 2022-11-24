@@ -71,7 +71,7 @@ export default function Home() {
         </Typography>{' '}
         in a few steps
       </Typography>
-      <Box sx={{ m: 5 }}>
+      <Box sx={{ m: -5 }}>
         <Button
           sx={{ width: 160, ml: 4, height: 40 }}
           component={Login}
