@@ -74,7 +74,12 @@ export default function ContactListItem({ id, name, number }) {
                 p: 4,
               }}
             >
-              <UpdateForm handleClose={toggle} id={id} name={name} number={number} />
+              <UpdateForm
+                handleClose={toggle}
+                id={id}
+                name={name}
+                number={number}
+              />
               <Outlet />
             </Box>
           </Modal>

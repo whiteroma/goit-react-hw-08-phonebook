@@ -1,5 +1,4 @@
 import React from 'react';
-import { Box } from '@mui/material';
 import { Modal } from '@mui/material';
 import { useToggleModal } from 'hooks/useToggleModal';
 import { Outlet } from 'react-router-dom';
@@ -23,7 +22,7 @@ export default function ModalWindow({ onClose, children }) {
   return (
     <>
       <Modal open={open} onCLose={onClose}>
-          {children}
+        {children}
       </Modal>
       <Outlet />
     </>

@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { React } from 'react';
-// import { List } from './ContactList.styled';
 import { List } from '@mui/material';
 import { useFetchContactsQuery } from 'ContactsApi/contactsApi';
 import ContactListItem from 'components/ContactListItem/ContactListItem';
@@ -9,7 +8,6 @@ import Filter from 'components/Filter/Filter';
 import ContactForm from 'components/ContactForm/ContactForm';
 import Box from '@mui/material/Box';
 import Dialog from '@mui/material/Dialog';
-// import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -34,15 +32,27 @@ export default function ContactList() {
   return (
     <>
       <Box
-        sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
+        sx={{
+          flexGrow: 1,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
       >
         <Filter />
-        <Button variant="contained" endIcon={<PersonAddIcon fontSize="inherit" />}
+        <Button
+          variant="contained"
+          endIcon={<PersonAddIcon fontSize="inherit" />}
           onClick={handleClickOpen}
-          sx={{ width: "200px", height: "42px", '&:hover': { backgroundColor: '#1976d2ed' } }}
+          sx={{
+            width: '200px',
+            height: '42px',
+            '&:hover': { backgroundColor: '#1976d2ed' },
+          }}
           color="primary"
-        > Add contact
-
+        >
+          {' '}
+          Add contact
         </Button>
 
         <Dialog open={open} onClose={handleClose}>

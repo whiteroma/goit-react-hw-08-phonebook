@@ -13,7 +13,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Link } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
@@ -112,6 +112,12 @@ export default function Login() {
           >
             Log in
           </LoadingButton>
+          <Link
+            sx={{ fontSize: 12, mt: 2, ml: 'auto', mr: 'auto' }}
+            href="/signup"
+          >
+            Not registered yet? Click to sign up
+          </Link>
         </FormControl>
       </FormContainer>
       <Outlet />

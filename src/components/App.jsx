@@ -1,16 +1,17 @@
-import ContactList from './ContactList/ContactList';
 import { Container } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Route, Routes, Navigate } from 'react-router-dom';
-// import { lazy } from 'react';
+import { lazy } from 'react';
 import Layout from './Layout/Layout';
-import Register from 'Pages/register/Register';
-import Login from 'Pages/login/Login';
-import PrivateRoute from './UserMenu/PrivateRoute';
-import PublicRoute from './UserMenu/PublicRoute';
 import { useSelector } from 'react-redux';
-import Home from 'Pages/home/Home';
+
+const Register = lazy(() => import('Pages/register/Register'));
+const ContactList = lazy(() => import('./ContactList/ContactList'));
+const Login = lazy(() => import('Pages/login/Login'));
+const PrivateRoute = lazy(() => import('./UserMenu/PrivateRoute'));
+const PublicRoute = lazy(() => import('./UserMenu/PublicRoute'));
+const Home = lazy(() => import('Pages/home/Home'));
 
 export default function App() {
   const isRefreshing = useSelector(state => state.auth.isRefreshing);
@@ -21,7 +22,7 @@ export default function App() {
 
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home/>}/>
+            <Route index element={<Home />} />
             <Route
               path="contacts"
               element={
@@ -29,23 +30,15 @@ export default function App() {
                   <ContactList />
                 </PrivateRoute>
               }
-            >
-            </Route>
-
-            
+            ></Route>
 
             <Route path="/" element={<PublicRoute restricted />}>
-              <Route path="register" element={<Register />}></Route>
+              <Route path="signup" element={<Register />}></Route>
               <Route path="login" element={<Login />}></Route>
             </Route>
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Route>
         </Routes>
-        {/* <h1>Phonebook</h1>
-          <ContactForm />
-          <h2>Contacts</h2>
-          <Filter />
-          <ContactList /> */}
       </Container>
     )
   );

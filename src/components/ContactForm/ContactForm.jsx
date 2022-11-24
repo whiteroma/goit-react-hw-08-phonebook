@@ -32,23 +32,24 @@ const ContactForm = ({ handleClose }) => {
       name: '',
       number: '',
     },
-    validate: (values) => {
-        const errors = {};
-        const numberPattern = /^[0-9\b\s+().*-\s++]+$/;
-      const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
-        if (!values.number) {
-          errors.number = 'Required';
-        } else if (
-          !numberPattern.test(values.number)
-        ) {
-          errors.number = 'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
-        } else if (!values.name) {
-          errors.name = 'Required';
-        } else if (!namePattern.test(values.name)) {
-          errors.name = "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-        }
-        return errors;
-      },
+    validate: values => {
+      const errors = {};
+      const numberPattern = /^[0-9\b\s+().*-\s++]+$/;
+      const namePattern =
+        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
+      if (!values.number) {
+        errors.number = 'Required';
+      } else if (!numberPattern.test(values.number)) {
+        errors.number =
+          'Phone number must be digits and can contain spaces, dashes, parentheses and can start with +';
+      } else if (!values.name) {
+        errors.name = 'Required';
+      } else if (!namePattern.test(values.name)) {
+        errors.name =
+          "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
+      }
+      return errors;
+    },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       const addedName = data
@@ -64,7 +65,7 @@ const ContactForm = ({ handleClose }) => {
     },
   });
 
-  console.log(formik.errors)
+  console.log(formik.errors);
 
   useEffect(() => {
     if (isSuccess) {

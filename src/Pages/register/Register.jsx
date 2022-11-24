@@ -13,7 +13,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Link } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
 import { useSelector } from 'react-redux';
 
@@ -151,6 +151,12 @@ export default function Register() {
           >
             Sign Up
           </LoadingButton>
+          <Link
+            sx={{ fontSize: 12, mt: 2, ml: 'auto', mr: 'auto' }}
+            href="/login"
+          >
+            Already have and account? Click to log in
+          </Link>
         </FormControl>
       </FormContainer>
       <Outlet />

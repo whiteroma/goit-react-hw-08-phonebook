@@ -4,6 +4,7 @@ import UserMenu from 'components/UserMenu/UserMenu';
 import { useSelector } from 'react-redux';
 import AuthNav from 'components/UserMenu/AuthNav';
 import { useGetUserQuery } from 'UserApi/userApi';
+import { CircularProgress } from '@mui/material';
 
 export default function Layout() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -13,7 +14,7 @@ export default function Layout() {
   return (
     <>
       {isLoggedIn ? <UserMenu /> : <AuthNav />}
-      <Suspense>
+      <Suspense fallback={<CircularProgress />}>
         <Outlet />
       </Suspense>
     </>

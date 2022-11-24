@@ -32,7 +32,8 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
     validate: values => {
       const errors = {};
       const numberPattern = /^[0-9\b\s+().*-\s++]+$/;
-      const namePattern = /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/
+      const namePattern =
+        /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/;
       if (!values.number) {
         errors.number = 'Required';
       } else if (!numberPattern.test(values.number)) {
@@ -41,7 +42,8 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
       } else if (!values.name) {
         errors.name = 'Required';
       } else if (!namePattern.test(values.name)) {
-        errors.name = "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+        errors.name =
+          "Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan";
       }
 
       return errors;

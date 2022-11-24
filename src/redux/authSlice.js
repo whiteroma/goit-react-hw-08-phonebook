@@ -36,12 +36,12 @@ export const authSlice = createSlice({
           state.isLoggedIn = true;
           state.error = null;
         }
-      ).addMatcher(
-        userApi.endpoints.signUpUser.matchRejected,
-        () => {
-          toast.error("Something went wrong. Maybe this user or email is already registered.")
-        }
       )
+      .addMatcher(userApi.endpoints.signUpUser.matchRejected, () => {
+        toast.error(
+          'Something went wrong. Maybe this user or email is already registered.'
+        );
+      })
       .addMatcher(userApi.endpoints.logOutUser.matchFulfilled, (state, _) => {
         state.token = null;
         state.user = null;
@@ -60,15 +60,15 @@ export const authSlice = createSlice({
       })
       .addMatcher(userApi.endpoints.getUser.matchRejected, state => {
         state.isRefreshing = false;
-      })
-      // .addMatcher(
-      //   userApi.endpoints.updateContact.matchFulfilled,
-      //   (state, { payload }) => {
-      //     state.token = payload.token;
-      //     state.isLoggedIn = true;
-      //     state.user = payload.user;
-      //   }
-      // );
+      });
+    // .addMatcher(
+    //   userApi.endpoints.updateContact.matchFulfilled,
+    //   (state, { payload }) => {
+    //     state.token = payload.token;
+    //     state.isLoggedIn = true;
+    //     state.user = payload.user;
+    //   }
+    // );
   },
 });
 
