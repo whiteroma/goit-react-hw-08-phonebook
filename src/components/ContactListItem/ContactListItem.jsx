@@ -11,17 +11,20 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import React from 'react';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { CircularProgress } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import UpdateForm from 'components/UpdateForm/UpdateForm';
-import { Box } from '@mui/material';
-import { Modal } from '@mui/material';
+import { Box, Button, Modal, CircularProgress } from '@mui/material';
 
 export default function ContactListItem({ id, name, number }) {
   const [deleteContact, { isLoading, isSuccess, isError }] =
     useDeleteContactMutation();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen(open => !open);
+
+  const handleClose = (_, reason) => {
+    if (reason && reason === 'backdropClick') return;
+    toggle();
+  };
 
   useEffect(() => {
     if (isSuccess) {
@@ -42,15 +45,9 @@ export default function ContactListItem({ id, name, number }) {
           </Avatar>
         </ListItemAvatar>
         <ListItemText primary={name} secondary={number} />
-        <LoadingButton
-          size="small"
-          onClick={toggle}
-          loading={isLoading}
-          loadingPosition="center"
-          loadingIndicator={<CircularProgress color="primary" size={16} />}
-        >
+        <Button size="small" onClick={toggle}>
           <EditIcon />
-        </LoadingButton>
+        </Button>
         <LoadingButton
           size="small"
           onClick={() => deleteContact(id)}
@@ -62,7 +59,7 @@ export default function ContactListItem({ id, name, number }) {
         </LoadingButton>
 
         {open && (
-          <Modal open={open} onClose={toggle}>
+          <Modal disableEscapeKeyDown open={open} onClose={handleClose}>
             <Box
               sx={{
                 position: 'absolute',

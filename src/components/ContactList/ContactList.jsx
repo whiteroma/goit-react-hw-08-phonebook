@@ -25,7 +25,8 @@ export default function ContactList() {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleClose = (_, reason) => {
+    if (reason && reason === 'backdropClick') return;
     setOpen(false);
   };
 
@@ -55,7 +56,7 @@ export default function ContactList() {
           Add contact
         </Button>
 
-        <Dialog open={open} onClose={handleClose}>
+        <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
           <DialogTitle>Create contact</DialogTitle>
           <DialogContent>
             <DialogContentText>

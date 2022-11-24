@@ -16,6 +16,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import FormHelperText from '@mui/material/FormHelperText';
+import { Button } from '@mui/material';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
@@ -126,17 +127,14 @@ const ContactForm = ({ handleClose }) => {
             >
               Add
             </LoadingButton>
-            <LoadingButton
+            <Button
               variant="contained"
               size="large"
               type="button"
               onClick={handleClose}
-              loading={isLoading}
-              loadingPosition="center"
-              loadingIndicator={<CircularProgress color="primary" size={24} />}
             >
               Cancel
-            </LoadingButton>
+            </Button>
           </ButtonGroup>
         </FormControl>
       </FormContainer>

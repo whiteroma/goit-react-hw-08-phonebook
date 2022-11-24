@@ -54,9 +54,7 @@ export default function Register() {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      console.log('errorMessage', errorMessage);
       await signUpUser(values);
-      resetForm();
     },
   });
 

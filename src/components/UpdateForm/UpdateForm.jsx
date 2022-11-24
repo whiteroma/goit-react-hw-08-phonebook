@@ -17,6 +17,7 @@ import { CircularProgress } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Typography from '@mui/material/Typography';
 import FormHelperText from '@mui/material/FormHelperText';
+import { Button } from '@mui/material';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Please enter a name'),
@@ -58,7 +59,9 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
         .map(contact => contact.name.toLowerCase())
         .includes(values.name.toLowerCase());
       if (addedName) {
-        return toast.error(`${values.name} is already in a list`);
+        return toast.error(
+          `${values.name} or ${values.number} is already in a list`
+        );
       } else {
         await updateContact({ ...values });
         resetForm();
@@ -135,17 +138,14 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
             >
               Update
             </LoadingButton>
-            <LoadingButton
+            <Button
               variant="contained"
               size="large"
               type="button"
               onClick={handleClose}
-              loading={isLoading}
-              loadingPosition="center"
-              loadingIndicator={<CircularProgress color="primary" size={24} />}
             >
               Cancel
-            </LoadingButton>
+            </Button>
           </ButtonGroup>
         </FormControl>
       </FormContainer>

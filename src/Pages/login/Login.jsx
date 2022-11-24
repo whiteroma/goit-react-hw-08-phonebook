@@ -15,6 +15,8 @@ import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { CircularProgress } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const validationSchema = Yup.object().shape({
   password: Yup.string()
@@ -27,6 +29,7 @@ const validationSchema = Yup.object().shape({
 export default function Login() {
   const [logInUser, { isLoading }] = useLogInUserMutation();
   const [showPassword, setShowPassword] = useState();
+  const error = useSelector(state => state.auth.error);
 
   const formik = useFormik({
     initialValues: {
@@ -38,7 +41,6 @@ export default function Login() {
     onSubmit: async (values, { resetForm }) => {
       await logInUser(values);
       redirect('/contacts');
-      resetForm();
     },
   });
 

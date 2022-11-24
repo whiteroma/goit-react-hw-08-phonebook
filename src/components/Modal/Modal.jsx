@@ -6,22 +6,10 @@ import { useEffect } from 'react';
 
 export default function ModalWindow({ onClose, children }) {
   const { open } = useToggleModal();
-
-  useEffect(() => {
-    const handleKeyDown = e => {
-      console.log('handleKeyDown');
-      if (e.code === 'Escape') {
-        onClose();
-      }
-    };
-    window.addEventListener('keydown', handleKeyDown);
-
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [onClose]);
-
+  
   return (
     <>
-      <Modal open={open} onCLose={onClose}>
+      <Modal disableEscapeKeyDown open={open} onCLose={onClose}>
         {children}
       </Modal>
       <Outlet />

@@ -12,7 +12,6 @@ const initialState = {
   token: null,
   isLoggedIn: false,
   isRefreshing: false,
-  error: null,
 };
 
 export const authSlice = createSlice({
@@ -28,6 +27,11 @@ export const authSlice = createSlice({
           state.user = payload.user;
         }
       )
+      .addMatcher(userApi.endpoints.logInUser.matchRejected, (state, _) => {
+        toast.error(
+          'Something went wrong. Perhaps you are not registered yet.'
+        );
+      })
       .addMatcher(
         userApi.endpoints.signUpUser.matchFulfilled,
         (state, { payload }) => {
@@ -39,7 +43,7 @@ export const authSlice = createSlice({
       )
       .addMatcher(userApi.endpoints.signUpUser.matchRejected, () => {
         toast.error(
-          'Something went wrong. Maybe this user or email is already registered.'
+          'Something went wrong. Perhaps this user or email is already registered.'
         );
       })
       .addMatcher(userApi.endpoints.logOutUser.matchFulfilled, (state, _) => {
