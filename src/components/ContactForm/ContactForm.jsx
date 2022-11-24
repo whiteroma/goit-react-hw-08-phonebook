@@ -105,7 +105,6 @@ const ContactForm = ({ handleClose }) => {
         >
           <InputLabel htmlFor="number">Number</InputLabel>
           <Input
-            // inputProps={{ inputMode: "numeric", pattern: "[0-9]*"}}
             id="number"
             type="text"
             value={formik.values.number}

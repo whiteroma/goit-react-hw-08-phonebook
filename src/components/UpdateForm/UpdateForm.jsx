@@ -2,7 +2,10 @@ import { React } from 'react';
 import { FormContainer } from 'components/ContactForm/ContactForm.styled';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useUpdateContactMutation } from 'ContactsApi/contactsApi';
+import {
+  useFetchContactsQuery,
+  useUpdateContactMutation,
+} from 'ContactsApi/contactsApi';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
@@ -23,6 +26,7 @@ const validationSchema = Yup.object().shape({
 const UpdateForm = ({ handleClose, id, name, number }) => {
   const [updateContact, { isLoading, isError, isSuccess }] =
     useUpdateContactMutation();
+  const { data } = useFetchContactsQuery();
 
   const formik = useFormik({
     initialValues: {
@@ -50,9 +54,16 @@ const UpdateForm = ({ handleClose, id, name, number }) => {
     },
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
-      await updateContact({ values, id });
-      resetForm();
-      handleClose();
+      const addedName = data
+        .map(contact => contact.name.toLowerCase())
+        .includes(values.name.toLowerCase());
+      if (addedName) {
+        return toast.error(`${values.name} is already in a list`);
+      } else {
+        await updateContact({ ...values });
+        resetForm();
+        handleClose();
+      }
     },
   });
 
