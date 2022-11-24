@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useLogInUserMutation } from 'UserApi/userApi';
-import { FormContainer } from './Login.styled';
+import { FormContainer, StyledLink } from './Login.styled';
 import { redirect } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
@@ -13,7 +13,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import LoadingButton from '@mui/lab/LoadingButton';
-import { CircularProgress, Link } from '@mui/material';
+import { CircularProgress } from '@mui/material';
 import FormHelperText from '@mui/material/FormHelperText';
 
 const validationSchema = Yup.object().shape({
@@ -112,12 +112,9 @@ export default function Login() {
           >
             Log in
           </LoadingButton>
-          <Link
-            sx={{ fontSize: 12, mt: 2, ml: 'auto', mr: 'auto' }}
-            href="/signup"
-          >
+          <StyledLink to="/signup">
             Not registered yet? Click to sign up
-          </Link>
+          </StyledLink>
         </FormControl>
       </FormContainer>
       <Outlet />

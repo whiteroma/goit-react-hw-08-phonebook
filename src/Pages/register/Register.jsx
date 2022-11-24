@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useSignUpUserMutation } from 'UserApi/userApi';
-import { FormContainer } from './Register.styled';
+import { FormContainer, StyledLink } from './Register.styled';
 import React from 'react';
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
@@ -55,9 +55,6 @@ export default function Register() {
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       console.log('errorMessage', errorMessage);
-      // if (errorMessage) {
-      //   toast.error(errorMessage);
-      // } else {
       await signUpUser(values);
       resetForm();
     },
@@ -151,12 +148,9 @@ export default function Register() {
           >
             Sign Up
           </LoadingButton>
-          <Link
-            sx={{ fontSize: 12, mt: 2, ml: 'auto', mr: 'auto' }}
-            href="/login"
-          >
+          <StyledLink to="/login">
             Already have and account? Click to log in
-          </Link>
+          </StyledLink>
         </FormControl>
       </FormContainer>
       <Outlet />

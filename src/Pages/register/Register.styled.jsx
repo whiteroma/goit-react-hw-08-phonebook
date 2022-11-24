@@ -1,5 +1,19 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
+export const StyledLink = styled(NavLink)`
+font-size: 12px;
+margin-top: 1rem; 
+margin-left: auto;
+margin-right: auto; 
+color: #1976d2;
+&.active {
+  color: white;
+}
+:hover:not(.active) {
+  text-decoration: underline;
+}
+`;
 export const FormContainer = styled.form`
   display: flex;
   align-items: center;

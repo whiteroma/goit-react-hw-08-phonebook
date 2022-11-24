@@ -2,6 +2,7 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 import Typography from '@mui/material/Typography';
+import Login from 'Pages/login/Login';
 
 export default function Home() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
@@ -33,20 +34,10 @@ export default function Home() {
           mb: 5,
         }}
       >
-        {' '}
         <Typography variant="h6" sx={{}}>
           Manage your contacts in the Contacts section
         </Typography>
       </Box>
-      <Button
-        sx={{ width: 240, height: 40 }}
-        href="/contacts"
-        variant="contained"
-      >
-        <Typography variant="h7" sx={{ textAlign: 'center' }}>
-          Contacts
-        </Typography>
-      </Button>
     </Box>
   ) : (
     <Box
@@ -82,15 +73,9 @@ export default function Home() {
       </Typography>
       <Box sx={{ m: 5 }}>
         <Button
-          sx={{ width: 160, height: 40 }}
-          href="/signup"
-          variant="contained"
-        >
-          Sign Up
-        </Button>
-        <Button
           sx={{ width: 160, ml: 4, height: 40 }}
-          href="/login"
+          component={Login}
+          to="/contacts"
           variant="contained"
         >
           Log in
