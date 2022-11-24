@@ -149,7 +149,7 @@ export default function Register() {
             Sign Up
           </LoadingButton>
           <StyledLink to="/login">
-            Already have and account? Click to log in
+            Already have an account? Click to log in
           </StyledLink>
         </FormControl>
       </FormContainer>
